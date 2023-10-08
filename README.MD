@@ -67,3 +67,60 @@ Swagger UI
       required: true
       description: the job id
 ```
+
+
+
+## step1 
+add JWT_SECRET to the env
+
+controllers
+
+auth.js
+register, login
+------------
+jobs.jos
+createJob
+getalljobs
+deleteJob
+getJob
+update
+
+-----------
+router
+auth.js
+post('/register)
+post('/login)
+
+jobs.js
+('/') -> get all jobs
+('/:id') for get, update delete
+
+-------------
+app
+
+app.use('/api/v1/auth')
+app.use('/api/v1/job')
+
+
+----------------
+Create user model
+user.model
+
+name, email, password
+
+
+## step2
+In the register function await User.create()
+check if name , email etc is not present send the bad request
+user.create({...req.body})
+
+
+the password we will encrypt using bcrypt js
+
+const = await bcrypt.genSalt(10)
+salt hashedPassword = await bcrypt.hash(password, salt)
+tempUser  = { name, email, password: hashedPassword }
+
+
+## step 3
+Use mongoose middleware
