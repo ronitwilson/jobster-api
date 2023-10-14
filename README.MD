@@ -165,3 +165,8 @@ FOr this in the user schema, have a method comparePassword
 comparePassword = async function (candidate password) {
   ismatch = await bcrypt.comapre(candid_password, this.password)
 }
+
+
+## step 4 
+Have the authentication middleware -> reffer to previous project
+just veriy the jwt token
