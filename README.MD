@@ -117,10 +117,16 @@ user.create({...req.body})
 
 the password we will encrypt using bcrypt js
 
+do the bcrypt in the userSchema.pre('save', async function() {})
+
 const = await bcrypt.genSalt(10)
 salt hashedPassword = await bcrypt.hash(password, salt)
 tempUser  = { name, email, password: hashedPassword }
 
+IN the auth.js
 
-## step 3
-Use mongoose middleware
+after user create -> get the token -> jwt.sign({userId:user._id, name:user.name}, 'jwtSecret', {expiresIN: '30d'})
+
+res.status(statusCode.CREATED.json({user: { name: user.name}, token)
+
+
