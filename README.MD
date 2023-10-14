@@ -152,3 +152,16 @@ check if no email or password -> send bad request
 
 const user = await User.findOne({email}) -> if no user thow unathenticatedError -> which is a custom error
 
+if user is there get token 
+token = user.createJWT()
+res.status(StatusCode.okay).json({user: { name: user.name }, token })
+
+
+NOTE: In the pstman body 
+
+In this function, we compare the password
+FOr this in the user schema, have a method comparePassword
+
+comparePassword = async function (candidate password) {
+  ismatch = await bcrypt.comapre(candid_password, this.password)
+}
