@@ -129,4 +129,26 @@ after user create -> get the token -> jwt.sign({userId:user._id, name:user.name}
 
 res.status(statusCode.CREATED.json({user: { name: user.name}, token)
 
+in the user schema 
+#UserSchema.methods.getName = fn() {
+#return this.name }
+
+UserSchema.methods.createJWT = fn () {
+return wt.sign({userId:this._id, name:this.name}, 'jwtSecret', {expiresIN: '30d'})
+
+so in the auth.js only need to call create JWT
+
+we can use allsecret website to generate a jwt secret online
+
+we can meve the expiresIN in the process.env
+
+
+## step 3
+In the controller in the login function 
+
+{ email, pass } = req.body
+
+check if no email or password -> send bad request
+
+const user = await User.findOne({email}) -> if no user thow unathenticatedError -> which is a custom error
 
