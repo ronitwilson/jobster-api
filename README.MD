@@ -170,3 +170,7 @@ comparePassword = async function (candidate password) {
 ## step 4 
 Have the authentication middleware -> reffer to previous project
 just veriy the jwt token
+set this middleware directly in the app.js jobs route
+
+
+## step 5
