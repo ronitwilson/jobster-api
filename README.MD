@@ -158,19 +158,6 @@ this. password = await bcrypt. hash (this. password,salt)
 use jwt in the controller
   create token = jwt.sign({userId:user._id, name: user.name},'jwtSecret', expiresIn: '30d'), 
 
-### step 5
-In the jobs route we will send the user token which is signed
-
-create a jobs model
-
-video 8:08
-
-company: , position, status, createdBy: { type: mongoose.Types.ObjectId, ref: 'User', required: [true, 'Please provide user']}, timestamps
-
-use createJob to create the Db entry
-
-
-## Git merge
 
 In the controller in the login function 
 
@@ -195,11 +182,21 @@ comparePassword = async function (candidate password) {
 }
 
 
-## step 4 
+## step 5 
 Have the authentication middleware -> reffer to previous project
 just veriy the jwt token
 set this middleware directly in the app.js jobs route
 
 
-## step 5
+## step 6
+In the jobs route we will send the user token which is signed
+
+create a jobs model
+
+video 8:08
+
+company: , position, status, createdBy: { type: mongoose.Types.ObjectId, ref: 'User', required: [true, 'Please provide user']}, timestamps
+
+use createJob to create the Db entry
+
 
