@@ -124,3 +124,26 @@ tempUser  = { name, email, password: hashedPassword }
 
 ## step 3
 Use mongoose middleware
+
+move the hash password creation to the model using UserSchema.pre()
+
+UserSchema.pre( ' save' ,async function ( ) {
+const salt = await crypt.gensalt(10)
+this. password = await bcrypt. hash (this. password,salt)
+
+
+### step 4
+
+use jwt in the controller
+  create token = jwt.sign({userId:user._id, name: user.name},'jwtSecret', expiresIn: '30d'), 
+
+### step 5
+In the jobs route we will send the user token which is signed
+
+create a jobs model
+
+video 8:08
+
+company: , position, status, createdBy: { type: mongoose.Types.ObjectId, ref: 'User', required: [true, 'Please provide user']}, timestamps
+
+use createJob to create the Db entry
