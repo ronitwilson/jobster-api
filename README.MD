@@ -117,9 +117,30 @@ user.create({...req.body})
 
 the password we will encrypt using bcrypt js
 
+do the bcrypt in the userSchema.pre('save', async function() {})
+
 const = await bcrypt.genSalt(10)
 salt hashedPassword = await bcrypt.hash(password, salt)
 tempUser  = { name, email, password: hashedPassword }
+
+IN the auth.js
+
+after user create -> get the token -> jwt.sign({userId:user._id, name:user.name}, 'jwtSecret', {expiresIN: '30d'})
+
+res.status(statusCode.CREATED.json({user: { name: user.name}, token)
+
+in the user schema 
+#UserSchema.methods.getName = fn() {
+#return this.name }
+
+UserSchema.methods.createJWT = fn () {
+return wt.sign({userId:this._id, name:this.name}, 'jwtSecret', {expiresIN: '30d'})
+
+so in the auth.js only need to call create JWT
+
+we can use allsecret website to generate a jwt secret online
+
+we can meve the expiresIN in the process.env
 
 
 ## step 3
@@ -147,3 +168,38 @@ video 8:08
 company: , position, status, createdBy: { type: mongoose.Types.ObjectId, ref: 'User', required: [true, 'Please provide user']}, timestamps
 
 use createJob to create the Db entry
+
+
+## Git merge
+
+In the controller in the login function 
+
+{ email, pass } = req.body
+
+check if no email or password -> send bad request
+
+const user = await User.findOne({email}) -> if no user thow unathenticatedError -> which is a custom error
+
+if user is there get token 
+token = user.createJWT()
+res.status(StatusCode.okay).json({user: { name: user.name }, token })
+
+
+NOTE: In the pstman body 
+
+In this function, we compare the password
+FOr this in the user schema, have a method comparePassword
+
+comparePassword = async function (candidate password) {
+  ismatch = await bcrypt.comapre(candid_password, this.password)
+}
+
+
+## step 4 
+Have the authentication middleware -> reffer to previous project
+just veriy the jwt token
+set this middleware directly in the app.js jobs route
+
+
+## step 5
+
