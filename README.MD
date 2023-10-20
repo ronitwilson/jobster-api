@@ -200,3 +200,20 @@ company: , position, status, createdBy: { type: mongoose.Types.ObjectId, ref: 'U
 use createJob to create the Db entry
 
 
+## step 7
+remember in all jobs route we need to use the user id 
+const jobs = await Job.find({ createdBy:req.user.userld}). sort('createdAt')
+
+at 8:26 it is explained how to use postman to test the dynamic setting of access token
+
+implement getjob
+  get jobid and userId
+job - await Job.findOne({_id:jobId, createdBy:userId})
+
+implement updateJob
+  send position in  the req body 
+  and update the model 
+
+similarly delete job
+
+send the count in get all jobs route , to verify delete job
