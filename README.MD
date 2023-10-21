@@ -140,7 +140,7 @@ so in the auth.js only need to call create JWT
 
 we can use allsecret website to generate a jwt secret online
 
-we can meve the expiresIN in the process.env
+we can meve the expiresIn in the process.env
 
 
 ## step 3

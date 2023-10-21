@@ -43,4 +43,11 @@ const UserSchema = new mongoose.Schema({
     },
 })
 
+UserSchema.methods.getName = function () {
+    console.log("reaches the getname method")
+    // console.log(this.name)
+    // console.log(JSON)
+    return this.name
+}
+
 module.exports = mongoose.model('User', UserSchema)
