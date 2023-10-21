@@ -1,6 +1,5 @@
 const userModel = require('../models/User')
 const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
 require('dotenv').config();
 
 const login = async(req, res) => {
@@ -8,7 +7,6 @@ const login = async(req, res) => {
 }
 
 const register = async(req, res) => {
-    // console.log(req.body)
     const {name, email, password} = req.body
     if (! name || ! email) {
         res.status(403).json({msg: "no name or email"})
@@ -18,10 +16,8 @@ const register = async(req, res) => {
         res.status(403).json({msg: "no password"})
         return
     }
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(password, salt)
-    let tempUser = {name, email, password:hashedPassword}
-    // console.log(tempUser)
+    let tempUser = {name, email, password}
+    console.log("at user create")
     const userEntry = await userModel.create(tempUser)
     token = userEntry.createJWT()
     res.status(200).json({msg: `register success`, token, user: {name : userEntry.getName()}})

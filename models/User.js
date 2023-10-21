@@ -8,6 +8,8 @@ location,
 
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
+require('dotenv').config();
 
 const UserSchema = new mongoose.Schema({
     name: {
@@ -43,6 +45,14 @@ const UserSchema = new mongoose.Schema({
         default: 'my city',    
     },
 })
+
+
+UserSchema.pre('save', async function () {
+    // console.log("in pre save")
+    if (!this.isModified('password')) return;
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  });
 
 UserSchema.methods.getName = function () {
     // console.log("reaches the getname method")
