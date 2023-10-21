@@ -6,6 +6,7 @@ lastName,
 location,
 */
 
+const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 
 const UserSchema = new mongoose.Schema({
@@ -44,10 +45,15 @@ const UserSchema = new mongoose.Schema({
 })
 
 UserSchema.methods.getName = function () {
-    console.log("reaches the getname method")
+    // console.log("reaches the getname method")
     // console.log(this.name)
     // console.log(JSON)
     return this.name
 }
 
+UserSchema.methods.createJWT = function () {
+    token = jwt.sign({userId: this._id, name: this.getName()}, process.env.JWT_SECRET, {expiresIn: '30d'});
+    // console.log(token)}
+    return token
+}
 module.exports = mongoose.model('User', UserSchema)

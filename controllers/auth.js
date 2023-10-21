@@ -23,12 +23,7 @@ const register = async(req, res) => {
     let tempUser = {name, email, password:hashedPassword}
     // console.log(tempUser)
     const userEntry = await userModel.create(tempUser)
-    console.log(userEntry.name)
-    console.log(userEntry._id)
-    console.log(process.env.JWT_SECRET)
-    token = jwt.sign({userId: userEntry._id, name: userEntry.getName()}, process.env.JWT_SECRET, {expiresIn: '30d'});
-    console.log("token")
-    console.log(token)
+    token = userEntry.createJWT()
     res.status(200).json({msg: `register success`, token, user: {name : userEntry.getName()}})
 }
 
