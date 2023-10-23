@@ -16,13 +16,14 @@ const login = async(req, res) => {
     }
     console.log("validating password")
     isPasswordValid = await user.isPasswordValid(password)
-    console.log(isPasswordValid)
+    // console.log(isPasswordValid)
     if(!isPasswordValid) {
         const unauthError = new UnAuthError("not valid password")
         throw unauthError
     }
-
-    res.status(200).json({msg: "login success"})
+    jwtToken = user.createJWT()
+    console.log(jwtToken)
+    res.status(200).json({msg: `login success`, jwtToken, user: {name : user.getName()}})
 }
 
 const register = async(req, res) => {
