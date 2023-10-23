@@ -1,8 +1,18 @@
 const userModel = require('../models/User')
-const bcrypt = require('bcryptjs')
 require('dotenv').config();
+const UnAuthError = require('../errors/unauthenticated')
 
 const login = async(req, res) => {
+    console.log("reach login")
+    const {email, password} = req.body
+    if (!email | ! password) {
+        const unauthError = new UnAuthError()
+        throw unauthError  
+    }
+    const user = await userModel.findOne({email:email})
+    if (user === null) {
+        throw unauthError
+    }
     res.status(200).json({msg: "login success"})
 }
 
