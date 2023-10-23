@@ -66,4 +66,12 @@ UserSchema.methods.createJWT = function () {
     // console.log(token)}
     return token
 }
+
+UserSchema.methods.isPasswordValid = async function (candidate_password) {
+    console.log("reach here")
+    isMatch = await bcrypt.compare(candidate_password, this.password)
+    console.log(isMatch)
+    return isMatch
+}
+
 module.exports = mongoose.model('User', UserSchema)
