@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken")
 const UnAuthError = require("../errors/unauthenticated")
 
 
-const authMiddleware = (req, res, next) => {
+const authMiddleware =  (req, res, next) => {
     const authHeader = req.headers.authorization
     if (!authHeader || ! authHeader.startsWith('Bearer')){
         const badReqError = new BadReqError("no token provided")
@@ -16,9 +16,11 @@ const authMiddleware = (req, res, next) => {
         unAuthError = new UnAuthError("not valid token")
         throw unAuthError
     }
-    const {username, id} = jwt.decode(token)
-
-    req.user = {id, username}
+    const decoded_val =   jwt.decode(token)
+    const {userId, name} = decoded_val
+    console.log(`id is ${userId}`)
+    req.user = {id: userId, username: name}
+    console.log(req.user)
     next()
 }
 
