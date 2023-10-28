@@ -10,7 +10,7 @@ const createJob = async(req, res) => {
 const getalljobs = async(req, res) => {
     console.log("getalljobs")
     console.log(req.user.id)
-    const jobs = await jobModel.find({createdBy: req.user.id})
+    const jobs = await jobModel.find({createdBy: req.user.id}).sort('createdAt')
     console.log(jobs)
     res.status(200).json({jobs})
 }
