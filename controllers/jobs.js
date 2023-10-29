@@ -20,10 +20,12 @@ const deleteJob = async(req, res) => {
 }
 
 const getJob = async(req, res) => {
-    res.status(200).json({msg: "getJob"})
+    const job = await jobModel.findOne({createdBy: req.user.id, _id: req.params.id})
+    res.status(200).json({msg: "getJob", job})
 }
 
 const updateJob = async(req, res) => {
+    const job = await jobModel.findOneAndUpdate({createdBy: req.user.id, _id: req.params.id})
     res.status(200).json({msg: "updateJob"})
 }
 
