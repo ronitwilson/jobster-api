@@ -25,8 +25,18 @@ const getJob = async(req, res) => {
 }
 
 const updateJob = async(req, res) => {
-    const job = await jobModel.findOneAndUpdate({createdBy: req.user.id, _id: req.params.id})
-    res.status(200).json({msg: "updateJob"})
+    if(! req.body.position && ! req.body.company){
+        res.status(400).json({msg: "need company or position to update"})
+    }
+    const job = await jobModel.findOneAndUpdate({createdBy: req.user.id, _id: req.params.id},
+         req.body,  { new: true, runValidators: true })
+    if(job) {
+        res.status(200).json({msg: "job updated"})
+    }
+    else {
+        res.status(400).json({msg: "job not found"})
+    }
+    
 }
 
 module.exports = {
